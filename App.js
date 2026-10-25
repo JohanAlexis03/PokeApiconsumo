@@ -1,20 +1,32 @@
+import React, { useState } from 'react';
+import { StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { PokemonListScreen } from './src/screens/PokemonListScreen';
 
+// Concept: root component managing simple state-based screen navigation
 export default function App() {
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    // Concept: SafeAreaProvider ensures safe insets for notches and home indicators
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.safeArea}>
+        <StatusBar style="dark" />
+        <PokemonListScreen
+          onSelectPokemon={(pokemon) => {
+            setSelectedPokemon(pokemon);
+            // Detail screen will be connected here
+          }}
+        />
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
   },
 });
