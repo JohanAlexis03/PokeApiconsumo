@@ -40,7 +40,17 @@ export const getPokemonList = async (offset = 0, limit = 20) => {
 
 // Concept: input sanitization and 404 handling
 export const getPokemonDetail = async (nameOrId) => {
-  const cleanQuery = String(nameOrId).trim().toLowerCase();
+  let cleanQuery = String(nameOrId).trim().toLowerCase();
+
+  // Strip leading '#' if user typed e.g. '#25' or '#025'
+  if (cleanQuery.startsWith('#')) {
+    cleanQuery = cleanQuery.slice(1);
+  }
+
+  // Remove leading zeros for numbers (e.g. '025' -> '25') because PokeAPI returns 404 for '025'
+  if (/^\d+$/.test(cleanQuery)) {
+    cleanQuery = String(parseInt(cleanQuery, 10));
+  }
 
   if (!cleanQuery) {
     throw new Error('Query is required');

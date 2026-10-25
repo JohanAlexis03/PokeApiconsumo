@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, FlatList, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Text, FlatList, ActivityIndicator, Keyboard } from 'react-native';
 import { getPokemonList, getPokemonDetail } from '../services/pokeapi';
 import { PokemonCard } from '../components/PokemonCard';
 import { SearchBar } from '../components/SearchBar';
@@ -59,6 +59,7 @@ export const PokemonListScreen = ({ onSelectPokemon }) => {
   };
 
   const handleSearch = async () => {
+    Keyboard.dismiss();
     const query = search.trim();
     if (!query) {
       handleClearSearch();
@@ -91,6 +92,7 @@ export const PokemonListScreen = ({ onSelectPokemon }) => {
   };
 
   const handleClearSearch = () => {
+    Keyboard.dismiss();
     setSearch('');
     setSearchResults(null);
     setNotFound(false);
@@ -133,6 +135,7 @@ export const PokemonListScreen = ({ onSelectPokemon }) => {
           keyExtractor={(item) => String(item.id)}
           numColumns={2}
           contentContainerStyle={styles.list}
+          keyboardShouldPersistTaps="handled"
           renderItem={({ item }) => (
             <PokemonCard pokemon={item} onPress={onSelectPokemon} />
           )}

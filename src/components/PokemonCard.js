@@ -33,6 +33,7 @@ export const PokemonCard = ({ pokemon, onPress }) => {
 const styles = StyleSheet.create({
   card: {
     flex: 1,
+    maxWidth: '48%',
     backgroundColor: '#FFFFFF',
     margin: 8,
     borderRadius: 16,
